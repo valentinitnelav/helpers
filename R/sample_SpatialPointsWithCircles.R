@@ -6,16 +6,19 @@ sample_SpatialPointsWithCircles <- function(sp.polygons,
                                             my.seed = 2017L)
 {
     # ----------------------------------------
-    # Function to sample given points with circles at given random locations within given polygon
+    # Function to sample given points (sp.points) with circles at given random locations 
+    # within given polygons area (sp.polygons).
+    # Circles must respect some conditions - be within sp.polygons and contain an exact number of points 
+    # as given in "containing" argument.
     # ___ Arguments
-    # sp.polygons       - Spatial polygons within sampling takes place. Must have the same CRS as sp.points.
+    # sp.polygons       - Spatial polygon(s). Sampling takes place within the polygon(s). Must have the same CRS as sp.points.
     #                       The CRS must be a projected one (no long-lat, but in meters)
     # sp.points         - Spatial points that are sampled. Must have the same CRS as sp.polygons.
     # N.random.circles  - Number of circles used to sample within the area of sp.polygons.
-    # radius            - Radius of a sampling circle in meters. Same details as for width argument in rgeos::gBuffer()
+    # radius            - Radius of a sampling circle in meters. Same details as for "width" argument in rgeos::gBuffer()
     # containing        - Exact number (integer) of sampled points to be contained by a sampling circle.
     # my.seed           - Random seed (integer).
-
+    
     # ___ Returns
     # A list with a data frame and a spatial object
     # circle.sample  - data frame with points sampled and associated data
