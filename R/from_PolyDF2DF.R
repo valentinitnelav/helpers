@@ -1,4 +1,4 @@
-from_PolyDF.to.DF <- function(my.polyDF)
+from_PolyDF2DF <- function(my.polyDF)
 {
     # ----------------------------------------
     # Function to convert from SpatialPolygonsDataFrame to data frame while keeping attributes
