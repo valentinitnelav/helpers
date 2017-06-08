@@ -57,12 +57,12 @@ sample_SpatialPointsWithCircles <- function(sp.polygons,
     circles.OK <- circles.InLand[IsCircleOK,]
     
     # get polygons intersected by selected circles
-    circ.over.polys <- sp::over(x = circles.OK, sp.polygons[,c(1,2)])
+    circ.over.polys <- sp::over(x = circles.OK, sp.polygons)
     circ.over.polys$circle.id <- 1:dim(circ.over.polys)[1]
     
     # get point IDs from within selected circles
     IsPointInCircleOK <- IsPointInCircle[, IsCircleOK, drop=FALSE]
-    
+    # which points were sampled? - note rownames correspond to point id
     pts.sampled <- which(IsPointInCircleOK, arr.ind = T)
     pts.sampled <- cbind(pts.sampled, as.integer(rownames(pts.sampled)))
     colnames(pts.sampled)[2:3] <- c("circle.id", "point.ID")
@@ -71,7 +71,9 @@ sample_SpatialPointsWithCircles <- function(sp.polygons,
     circle.sample <- merge(x  = pts.sampled, 
                            y  = circ.over.polys, 
                            by = "circle.id")
+    # delete extra column
     circle.sample[,"row"] <- NULL
+    # rename columns
     colnames(circle.sample)[3:4] <- c("geoentity.ID", "geoentity.name")
     
     results <- list(circle.sample, circles.OK)
