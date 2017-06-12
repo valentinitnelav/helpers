@@ -92,7 +92,11 @@ extract_FromNearCellRst <- function(rst,
             # (it happens when buffer radius is not big enough and can't find any non-NA cell value)
             if (dim(my.buffer)[1] != 0) {
                 # use function nn2 {RANN} to find nearest neighbor (and corresponding distance)
-                NN <- RANN::nn2(data = my.buffer[,1:2], query = matrix(XY.NA[i,], ncol=2), k = 1)
+                # The drop = FALSE option is used defensively, see more at: 
+                # https://cran.r-project.org/doc/FAQ/R-FAQ.html#Why-do-my-matrices-lose-dimensions_003f 
+                NN <- RANN::nn2(data  = my.buffer[,1:2, drop = FALSE], 
+                                query = XY.NA[i,], # matrix(XY.NA[i,], ncol=2); seems that a data table doesn't need drop = FALSE when returning one row only
+                                k     = 1)
                 # get value of nearest neighbor cell
                 neighbors[i] <- my.buffer[NN$nn.idx,4]
             }
