@@ -43,7 +43,7 @@ extract_FromNearCellNetCDF <- function(ncdf.path,
              "\n Expecting values from the following list: \n",
              paste(names(ncFile$var), collapse = ", "))
     # Test if XYT is a 3 column data.table
-    if (!is.data.table(XYT) && dim(XYT)[2] != 3)
+    if (!is.data.table(XYT) | dim(XYT)[2] != 3)
         stop("Expecting XYT to be a a) data.table, b) with 3 columns. Please provide a 3-columns data.table object")
     # Check if the data.table’s columns are numeric
     # The user should take care of the numeric conversion because in this way it can discover possible unwanted values.
