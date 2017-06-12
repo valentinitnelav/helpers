@@ -91,7 +91,7 @@ extract_FromNearCellNetCDF <- function(ncdf.path,
     # ---------------------------------------
     # Apply extraction warpper function on two vectors – time and variables
     # For each unique combination of NetCDF variable (as given in "vars") and time (as given in the 3rd column of "XYT" table), 
-    # a raster is read from the NetCDF file and then a buffer extraction takes place using extract2near() function.
+    # a raster is read from the NetCDF file and then a buffer extraction takes place using extract_FromNearCellRst() function.
     start.time <- Sys.time()
     extr.lst <- mapply(
         function(ti,var)
@@ -103,9 +103,9 @@ extract_FromNearCellNetCDF <- function(ncdf.path,
                           band    = ti,
                           varname = var, 
                           crs = if (!is.na(ncdf.crs)) CRS(ncdf.crs) else NA)
-            # buffer extraction: call extract2near with messages supressed
+            # buffer extraction: call extract_FromNearCellRst with messages supressed
             # XY takes only unique pairs of coordinates as not to extract several times for the same pair of coordinates
-            vls <- suppressMessages(extract2near(rst = rst, 
+            vls <- suppressMessages(extract_FromNearCellRst(rst = rst, 
                                                  XY  = unique(XYT[T.idx == ti,.(X.lon, Y.lat)]),
                                                  my.buffer  = my.buffer,
                                                  simplified = FALSE,
@@ -129,7 +129,7 @@ extract_FromNearCellNetCDF <- function(ncdf.path,
     #         test.rst <- raster(x       = ncdf.path,
     #                            band    = ti,
     #                            varname = var)
-    #         test.extr <- suppressMessages(extract2near(rst = test.rst,
+    #         test.extr <- suppressMessages(extract_FromNearCellRst(rst = test.rst,
     #                                   XY  = unique(XYT[T.idx == ti, .(X.lon, Y.lat)]),
     #                                   my.buffer  = my.buffer,
     #                                   simplified = FALSE,
