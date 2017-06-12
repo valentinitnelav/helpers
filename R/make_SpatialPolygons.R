@@ -8,6 +8,10 @@ make_SpatialPolygons <- function(coords.lst, coords.crs)
     #       should equal last coordinates (row); 
     #       the status of the polygon as a hole or an island will be taken from the ring direction, 
     #       with clockwise meaning island, and counter-clockwise meaning hole.
+    #       NOTE - coords.lst could be obtained with split from data.table
+    #       split(data.table(my.polyg.df), by = "id", keep.by = FALSE)
+    #       where my.polyg.df can be obtained with
+    #       from_PolyDF2DF(my.polyg)
     # - coords.crs:
     #       projection string of class CRS-class (CRS-class {sp})
     # RETURNS SpatialPolygons
@@ -26,3 +30,4 @@ make_SpatialPolygons <- function(coords.lst, coords.crs)
     return(spolys)
     # Also check out rasterize polygons in ?rasterize for poly creation (?)
 }
+
