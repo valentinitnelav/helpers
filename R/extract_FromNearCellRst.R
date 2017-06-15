@@ -39,13 +39,13 @@ extract_FromNearCellRst <- function(rst,
     }
     
     # Inform about the CRS of the raster
-    message("Please always check if the raster and the points have the same CRS \n",
+    message("Please always check if the raster and the points correspond to the same CRS \n",
             "The CRS of the given raster is: \n", rst@crs, "\n")
     
     # ---------------------------------------
     # Some input checking
     # ---------------------------------------
-    # Test if XYT is a 3 column data.table
+    # Test if XY is a 2 column data.table
     if (!is.data.table(XY) | dim(XY)[2] != 2)
         stop("Expecting XY to be a a) data.table, b) with 2 columns (long-lat). Please provide a 2-columns data.table object")
     # Check if the data.table’s columns are numeric
