@@ -26,7 +26,9 @@ extract_FromNearCellRst <- function(rst,
     # ----------------------------------------
     start.time <- Sys.time()
     
+    # ---------------------------------------
     # Do some library checking
+    # ---------------------------------------
     if (isTRUE(lib.check)){
         if (!requireNamespace("RANN", quietly = TRUE)) 
             stop("Please install package {RANN}")
@@ -40,6 +42,27 @@ extract_FromNearCellRst <- function(rst,
     message("Please always check if the raster and the points have the same CRS \n",
             "The CRS of the given raster is: \n", rst@crs, "\n")
     
+    # ---------------------------------------
+    # Some input checking
+    # ---------------------------------------
+    # Test if XYT is a 3 column data.table
+    if (!is.data.table(XY) | dim(XY)[2] != 2)
+        stop("Expecting XY to be a a) data.table, b) with 2 columns (long-lat). Please provide a 2-columns data.table object")
+    # Check if the data.table’s columns are numeric
+    # The user should take care of the numeric conversion because in this way it can discover possible unwanted values.
+    is.col.num <- sapply(XY, is.numeric)
+    if ( ! all(is.col.num) )
+        stop("In XY, column(s): \n",
+             paste(colnames(XY)[!is.col.num], collapse = ", "), 
+             "\n not numeric! Please convert them to numeric.")
+    # Check if the buffer is numeric
+    # The user should take care of the numeric conversion because in this way it can discover possible unwanted values.
+    if (!is.numeric(my.buffer))
+        stop("Expecting numeric buffer (in meters)")
+    
+    # ---------------------------------------
+    # Extract
+    # ---------------------------------------
     # Extract cell value & ID at given XY point
     ext <- data.table(raster::extract(x = rst, y = XY, cellnumbers = TRUE, method = 'simple'))
     
