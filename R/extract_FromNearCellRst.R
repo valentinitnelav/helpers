@@ -135,12 +135,12 @@ extract_FromNearCellRst <- function(rst,
     
     # Return only extracted raster values or, optionally, add some extra columns
     if ( simplified ) {
-        message("\n Elapsed/CPU time: ", format(round(Sys.time() - start.time, digits = 2)))
+        message("\n Elapsed/CPU time: ", format(round(Sys.time() - start.time, digits = 2)), "\n\n")
         return(ext[,2])
     } else {
         # Adds column that indicates for each point if a buffer was used. NA means NO, 1 means YES
         ext[NA.idx, buf := 1L]
-        message("\n Elapsed/CPU time: ", format(round(Sys.time() - start.time, digits = 2)))
+        message("\n Elapsed/CPU time: ", format(round(Sys.time() - start.time, digits = 2)), "\n\n")
         return(cbind(XY, ext))
     }
 }
