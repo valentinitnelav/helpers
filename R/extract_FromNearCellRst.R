@@ -78,6 +78,7 @@ extract_FromNearCellRst <- function(rst,
         
         # extract now a buffer of cells around these "NA" points
         # will get a list of matrices with raster cell values and cell IDs around each "NA" point
+        # for some points can also return a single logical NA!
         # NOTE: buffer extraction (line below) is the most time consuming operation in all this process
         ext.bf <- raster::extract(x = rst, y = XY.NA, cellnumbers = TRUE, buffer = my.buffer, method = 'simple')
         
@@ -90,6 +91,8 @@ extract_FromNearCellRst <- function(rst,
         # get coordinates of the centers of raster cells only for non-NA cells in each buffer (matrix)
         ext.bf.noNA.XY <- lapply( ext.bf, 
                                   function(m) {
+                                      # if m is a single logical NA then consider it as empty matrix
+                                      if (is.null(dim(m))) m <- matrix(data = NA, nrow = 1, ncol = 2)
                                       # for each buffer matrix in the list of matrices ext.bf
                                       # exclude all rows with NA cell values (in 2nd column)
                                       # The drop = FALSE option is used defensively, see more at: 
