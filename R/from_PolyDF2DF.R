@@ -1,5 +1,8 @@
 from_PolyDF2DF <- function(my.polyDF)
 {
+    # Or left join results of broom::tidy() with my.polyDF@data  by "id" column 
+    # example with ggplot2::fortify() at https://github.com/Robinlovelace/Creating-maps-in-R
+    
     # ----------------------------------------
     # Function to convert from SpatialPolygonsDataFrame to data frame while keeping attributes
     # my.polyDF = SpatialPolygonsDataFrame object
