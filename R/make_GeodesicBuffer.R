@@ -77,7 +77,7 @@ make_GeodesicBuffer <- function(XY.dg, dg.step=5, dst.m, crs){
     # Make SpatialPolygons out of the list of coordinates
     poly   <- lapply(lst, sp::Polygon, hole = FALSE)
     polys  <- lapply(list(poly), sp::Polygons, ID = NA)
-    spolys <- sp::SpatialPolygons(Srl = polys, proj4string = crs)
+    spolys <- sp::SpatialPolygons(Srl = polys, proj4string = CRS(crs))
     # Disaggregate (split in unique polygons)
     spolys.buff <- sp::disaggregate(spolys)
     
