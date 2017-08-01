@@ -46,4 +46,4 @@ dg2dec <- function(Varb, Dg=NA, Min=NA, Sec=NA, SW.Hemisphere="S|W")
 # http://stackoverflow.com/questions/14404596/converting-geo-coordinates-from-degree-to-decimal
 # https://en.wikipedia.org/wiki/Geographic_coordinate_conversion#Coordinate_format_conversion
 # https://en.wikipedia.org/wiki/Decimal_degrees
-# tested conversion with http://www.pgc.umn.edu/tools/conversion
+# tested conversion with https://www.pgc.umn.edu/apps/convert/
