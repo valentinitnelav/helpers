@@ -24,7 +24,7 @@ make_GeodesicBuffer <- function(XY.dg, dg.step=5, dst.m, crs){
     #######################################################################################################
     
     # ---------------------------------------
-    # Check for valid imput and packages
+    # Check for valid input and packages
     # ---------------------------------------
     # Check for packages
     if (!requireNamespace("geosphere", quietly = TRUE)) 
@@ -64,13 +64,13 @@ make_GeodesicBuffer <- function(XY.dg, dg.step=5, dst.m, crs){
                                     d = dst.m)
     
     # ===========================================================
-    # A) Make SpatialPolygon from the points above
+    # B) Make SpatialPolygon from the points above
     # ===========================================================
     buff.XY <- data.table(buff.XY)
     # group (split) "buffer points" by id
     # add column which indicates to which point ID from N.points each circle-buffer point belongs to
     buff.XY[, id := rep(1:N.points, times = length(dg))]
-    # buff.XY[, bearing := rep(dg, each = dim(XY.dg)[1])] # for debuging reasons
+    # buff.XY[, bearing := rep(dg, each = dim(XY.dg)[1])] # for debugging reasons
     # split in a list of data tables with two columns: lon and lat
     lst <- split(buff.XY[,.(lon,lat,id)], by = "id", keep.by = FALSE)
     
@@ -85,6 +85,7 @@ make_GeodesicBuffer <- function(XY.dg, dg.step=5, dst.m, crs){
 }
 
 ## EXAMPLE
+##
 # require(rgeos)
 # require(sp)
 # require(plotKML)
