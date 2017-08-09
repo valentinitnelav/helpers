@@ -3,27 +3,32 @@ extract_FromNearCellRst <- function(rst,
                                     my.buffer, 
                                     simplified = TRUE, 
                                     lib.check  = TRUE){
-    # ----------------------------------------
-    # Function to extract to given XY point the closest valid cell values from raster.
-    # Specifically, for all points that the usual raster::extract() returns NA,
-    # it searches for the closest non-NA cell value within given buffer (typically meters).
-    # All other points returned by the usual raster::extract() are kept as such.
-    # ___ Arguments
-    # rst        - raster object
-    # XY         - data.table with two columns: first column=longitude; second column=latitude
-    # my.buffer  - same as in raster::extract(); "The radius of a buffer around each point from which to extract cell values. [...]
-    #              If the data are not projected (latitude/longitude), the unit should be meters. 
-    #              Otherwise it should be in map-units (typically also meters)".
-    #              buffer needs to be at least the raster's resolution (one cell)
-    # simplified - Logical argument. TRUE means that the result is a data.table with only one column - the extracted raster values.
-    #              If FALSE, then 5 extra columns are added: 
-    #               the coordinates (2 columns), 
-    #               the ID of the raster cells where the points fall, 
-    #               the raster cell values and 
-    #               a column that indicates for each point if a buffer was used (NA means NO, 1 means YES)
-    # ___ Returns
-    # data.table object (check "simplified" argument above)
-    # ----------------------------------------
+    #######################################################################################################
+    ## Function to extract to given XY point the closest valid cell values from raster.
+    ## Specifically, for all points that the usual raster::extract() returns NA,
+    ## it searches for the closest non-NA cell value within given buffer (typically meters).
+    ## All other points returned by the usual raster::extract() are kept as such.
+    ## It uses nn2 {RANN} to fast compute neighbors based on Euclidean distances.
+    ## The fact that Euclidean and not great circle distances (https://en.wikipedia.org/wiki/Great-circle_distance) 
+    ## are used does not alter the nearest neighbor search
+    ## (check https://scicomp.stackexchange.com/questions/7622/fast-nearest-neighbor-search-latitude-longitude?newreg=0daf766b1e5446bcaed39aee02153f26
+    ## for an interesting discusion).
+    ## ___ Arguments
+    ## rst        - raster object
+    ## XY         - data.table with two columns: first column=longitude; second column=latitude
+    ## my.buffer  - same as in raster::extract(); "The radius of a buffer around each point from which to extract cell values. [...]
+    ##              If the data are not projected (latitude/longitude), the unit should be meters. 
+    ##              Otherwise it should be in map-units (typically also meters)".
+    ##              buffer needs to be at least the raster's resolution (one cell)
+    ## simplified - Logical argument. TRUE means that the result is a data.table with only one column - the extracted raster values.
+    ##              If FALSE, then 5 extra columns are added: 
+    ##               the coordinates (2 columns), 
+    ##               the ID of the raster cells where the points fall, 
+    ##               the raster cell values and 
+    ##               a column that indicates for each point if a buffer was used (NA means NO, 1 means YES)
+    ## ___ Returns
+    ## data.table object (check "simplified" argument above)
+    #######################################################################################################
     start.time <- Sys.time()
     
     # ---------------------------------------
