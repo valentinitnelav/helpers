@@ -5,7 +5,7 @@ make_GeodesicBuffer <- function(XY.dg, dg.step=5, dst.m, crs){
     ## a geodesic buffer with a width expressed in metric units.
     ## Otherwise the user needs to project and apply an Euclidian buffer with rgeos::gBuffer(),
     ## which will introduce distortions that vary greatly with latitude and the radius of the circle buffer. 
-    ## See also my question addressed here:
+    ## See also the question addressed here:
     ## https://gis.stackexchange.com/questions/250389/euclidean-and-geodesic-buffering-in-r
     ##
     ## ARGUMENTS
@@ -18,9 +18,10 @@ make_GeodesicBuffer <- function(XY.dg, dg.step=5, dst.m, crs){
     ##       distance (radious of circle buffer) in meters
     ## - crs:
     ##       string of class CRS-class (CRS-class {sp})
-    ##       e.g. CRS(as.character("+proj=longlat +ellps=WGS84 +datum=WGS84"))
+    ##       e.g. "+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"
     ##
-    ## RETURNS SpatialPolygons circle buffer
+    ## RETURNS 
+    ## SpatialPolygons as circle buffers
     #######################################################################################################
     
     # ---------------------------------------
