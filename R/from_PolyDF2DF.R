@@ -20,3 +20,13 @@ from_PolyDF2DF <- function(my.polyDF)
     results <- cbind(df.tidy, my.df[,!names(my.df) %in% c("coords.x1",  "coords.x2")])
     return(results)
 }
+
+# NOTE, no need of broom::tidy() and the cbind,
+# return directly my.df
+# Also, the workflow can be rewritten like:
+# library(magrittr)
+# my.df <-
+#     my.polyDF %>%
+#     as("SpatialLinesDataFrame") %>%
+#     as("SpatialPointsDataFrame") %>%
+#     as.data.frame
